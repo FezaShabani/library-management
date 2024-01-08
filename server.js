@@ -9,16 +9,18 @@ import mongoose from "mongoose";
 
 dotenv.config()
 const app= express();
-app.use(express.json());
+// app.use(express.json());
 mongoose.set("strictQuery", true);
 const url=process.env.MONGODB_Url
 // Use MONGODB_URL in your code as needed
+
 mongoose.connect(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
 .then(() => console.log("database connected!"))
 .catch(error => console.error("Error connecting to database:", error));
+
 app.use(bodyParser.urlencoded({ extended: false })); // determine type of data we gonna body parse
 app.use(bodyParser.json());
 app.use(function (req, res, next) {

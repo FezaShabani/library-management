@@ -7,17 +7,17 @@ export const signUp = async (req, res, next) =>{
     try{
 
         const { firstname, lastname, username, id, password } = req.body;
-        console.log("----------> req. body is ",req.body)
+        console.log("----------> req.body is ",req.body)
+
         if (!firstname || !lastname || !username || !id || !password) {
             return res.status(400).json({
                 message: "Missing required fields in the request body."
             });
         }
         const newUser = new Student({ firstname, lastname, username, id, password });
-
         console.log(newUser);
-                                     newUser.save()
-                                    res.status(200).json("User created successfully!")
+         newUser.save()
+         res.status(200).json("User created successfully!")
 
     }
     catch(error){
