@@ -3,11 +3,11 @@ const TOKEN="voihjiogoi"
 
 //ici je cree les fonctions qui seront ensuite des pages au front end
 export const signUp = async (req, res, next) =>{
+    console.log("----------> req.body is ",req.body)
    
     try{
 
         const { firstname, lastname, username, id, password } = req.body;
-        console.log("----------> req.body is ",req.body)
 
         if (!firstname || !lastname || !username || !id || !password) {
             return res.status(400).json({
