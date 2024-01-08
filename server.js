@@ -5,23 +5,19 @@ import adminRoutes from "./routes/admin.routes.js";
 import bookRoutes from "./routes/book.routes.js";
 import dotenv from'dotenv'
 import studentRoutes from "./routes/student.routes.js";
+import mongoose from "mongoose";
+
 dotenv.config()
 const app= express();
-
 mongoose.set("strictQuery", true);
-import mongoose, { connect } from "mongoose";
-
-
-
+const url=process.env.MONGODB_Url
 // Use MONGODB_URL in your code as needed
-
-mongoose
-.connect(process.env.MONGODB_Url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("database connected!"));
-
+mongoose.connect(url, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log("database connected!"))
+.catch(error => console.error("Error connecting to database:", error));
 app.use(bodyParser.urlencoded({ extended: false })); // determine type of data we gonna body parse
 app.use(bodyParser.json());
 app.use(function (req, res, next) {
@@ -45,9 +41,8 @@ app.use(function (req, res, next) {
   app.use("/admin", adminRoutes);
   app.use("/student", studentRoutes);
   app.use("/book", bookRoutes);
-
 //   module.exports = app;
   app.listen(8800, () => {
-    connect();
-    console.log("Backend connected at port 8800");
+console.log("Backend connected at port 8800");
+
   })
