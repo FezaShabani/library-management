@@ -3,18 +3,30 @@ const TOKEN="voihjiogoi"
 
 //ici je cree les fonctions qui seront ensuite des pages au front end
 export const signUp = async (req, res, next) =>{
+   
     try{
-        const newUser = new Student({firstname: req.body.firstname, 
-            lastname: req.body.lastname, 
-            username: req.body.username,
-                                    id: req.body.id, 
-                                    password: req.body.password})
-                                    await newUser.save()
+
+        const { firstname, lastname, username, id, password } = req.body;
+        console.log("----------> req. body is ",req.body)
+        if (!firstname || !lastname || !username || !id || !password) {
+            return res.status(400).json({
+                message: "Missing required fields in the request body."
+            });
+        }
+        const newUser = new Student({ firstname, lastname, username, id, password });
+
+        console.log(newUser);
+                                     newUser.save()
                                     res.status(200).json("User created successfully!")
 
     }
     catch(error){
-        res.status(200).json("Something went wrong!")
+     
+        res.status(200).json({
+            message:"Something went wrong!",
+            err: error
+        })
+        console.log(" this is the error",error)
     }
 }
 

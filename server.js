@@ -9,6 +9,7 @@ import mongoose from "mongoose";
 
 dotenv.config()
 const app= express();
+app.use(express.json());
 mongoose.set("strictQuery", true);
 const url=process.env.MONGODB_Url
 // Use MONGODB_URL in your code as needed
