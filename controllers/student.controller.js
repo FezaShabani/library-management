@@ -3,6 +3,8 @@ const TOKEN="voihjiogoi"
 
 //ici je cree les fonctions qui seront ensuite des pages au front end
 export const signUp = async (req, res, next) =>{
+    console.log(req.body)
+
     try{
         const newUser = new Student({firstname: req.body.firstname, 
             lastname: req.body.lastname, 
