@@ -7,6 +7,6 @@ const router= express.Router();
 
 router.post("/addBook", addBook);
 router.post("/getOneBook", getOneBook);
-router.post("/getAllBook", getAllBook);
+router.get("/getAllBook", getAllBook);
 router.post("/deleteBook", deleteBook);
 export default router;

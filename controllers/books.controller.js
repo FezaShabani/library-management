@@ -4,23 +4,28 @@ import books from "../models/books.js"
 export const addBook = async (req, res, next) => {
     try{
         const newBook = new books({title: req.body.title,
-             authors: req.body.authors,
+             author: req.body.author,
               isbn: req.body.isbn,
-                                numberOfCopies: req.body.numberOfCopies})
-                                await newBook.save()
-                                res.status(200).json("Book added successfully!")
+            numberOfCopies: req.body.numberOfCopies})
+
+            console.log("the new book is ",newBook)
+             await newBook.save()
+              res.status(200).json("Book added successfully!")
     }
     catch(error){
-        res.status(200).json("Something went wrong!")
+        console.log(error)
+        res.status(500).send("Something went wrong!")
     }
 }
 export const getOneBook = async(req, res,next) => {
     try{
-        const bookToFind = await books.findById(request.body.title)
+        console.log("the book is ", req.body.title)
+        const bookToFind = await books.findOne({title:req.body.title})
         res.status(200).json(bookToFind)
     }
     catch(error){
-        res.status(200).json("Not found")
+        console.log(error)
+        res.status(500).send("Book Not found")
     }
 }
 export const getAllBook = async(req, res,next) => {
@@ -29,12 +34,12 @@ export const getAllBook = async(req, res,next) => {
         res.status(200).json(allBook)
     }
     catch(error){
-        res.status(200).json("Error")
+        res.status(500).send("Error")
     }
 }
 export const deleteBook = async(req, res, next) => {
     try{
-    const bookToDelete = await books.findByIdAndDelete(request.body.title)
+    const bookToDelete = await books.findByIdAndDelete(req.body.title)
     res.status(200).json("Book deleted")
     }
     catch(error){

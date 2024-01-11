@@ -4,8 +4,8 @@ import mongoose from "mongoose";
 //mongooseSchema cree notre modele dans le database
 const AdminSchema = new mongoose.Schema(
     {
-        firstname: {type: String, unique: true, required: true},
-        lastname: {type: String, unique: true, required: true},
+        firstname: {type: String, required: true},
+        lastname: {type: String, required: true},
         username: {type: String, unique: true, required: true},
         id: {type: String, unique: true, required: true},
         password: {type: String, required: true},

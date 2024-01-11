@@ -61,12 +61,15 @@ export const login= async(req,res,next)=>{
 }
 
 export const getOneStudent = async(req, res, next) =>{
+    console.log("the student id is ", req.body.id)
+
     try{
-        const studentToFind = await Student.findById(request.body.id)
+        const studentToFind = await Student.findOne({username:req.body.username})
         res.status(200).json(studentToFind)
     }
     catch(error){
-        restart.status(200).json("Student not found")
+        console.log("the error is ", error)
+        restart.status(500).send("Student not found")
     }
 }
 export const getAllStudent = async(req, res, next) =>{
@@ -75,6 +78,6 @@ export const getAllStudent = async(req, res, next) =>{
         res.status(200).json(allStudent)
     }
     catch(error){
-        res.status(200).json("Error!")
+        res.status(500).send("Error!")
     }
 }
