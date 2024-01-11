@@ -1,9 +1,13 @@
-import express from 'express';
+import express from "express";
 
-import { addBook, deleteBook, getAllBook, getOneBook } from "../controllers/books.controller.js";
+import {
+  addBook,
+  deleteBook,
+  getAllBook,
+  getOneBook,
+} from "../controllers/books.controller.js";
 
-
-const router= express.Router();
+const router = express.Router();
 
 router.post("/addBook", addBook);
 router.post("/getOneBook", getOneBook);
