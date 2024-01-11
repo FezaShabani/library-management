@@ -29,7 +29,9 @@ export const issueBookToStudent = async (req, res, next) => {
     });
 
     if (!studentToGetBook) {
-      return { success: false, message: "Student not found" };
+      return res
+        .status(404)
+        .json({ success: false, message: "Student not found" });
     }
     console.log("the student is ", studentToGetBook);
 
@@ -38,13 +40,18 @@ export const issueBookToStudent = async (req, res, next) => {
     console.log("the book to give  is ", bookToGive);
 
     if (!bookToGive) {
-      return { success: false, message: "Book not found" };
+      return res
+        .status(404)
+        .json({ success: false, message: "Book not found" });
     }
 
     console.log("the  number of copies is ", bookToGive.numberOfCopies);
     // Check if the book has available copies
     if ((bookToGive.numberOfCopies = 0)) {
-      return { success: false, message: "No available copies of the book" };
+      return res.status(400).json({
+        success: false,
+        message: "No available copies of the book",
+      });
     }
 
     // Add the book title to the student's book list

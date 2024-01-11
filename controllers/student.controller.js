@@ -54,14 +54,12 @@ export const login = async (req, res, next) => {
       },
     );
 
-    return res
-      .status(200)
-      .json({
-        message: "Login successfully",
-        token: token,
-        username,
-        id: student.id,
-      });
+    return res.status(200).json({
+      message: "Login successfully",
+      token: token,
+      username,
+      id: student.id,
+    });
   } catch (e) {
     console.log(e);
 
@@ -85,6 +83,7 @@ export const getOneStudent = async (req, res, next) => {
 export const getAllStudent = async (req, res, next) => {
   try {
     const allStudent = await Student.find();
+
     res.status(200).json(allStudent);
   } catch (error) {
     res.status(500).send("Error!");
