@@ -12,5 +12,5 @@ const router = express.Router();
 router.post("/signUp", signUp);
 router.post("/login", login);
 router.get("/getAllStudent", getAllStudent);
-router.post("/getOneStudent", getOneStudent);
+router.get("/getOneStudent/page/:id", getOneStudent);
 export default router;

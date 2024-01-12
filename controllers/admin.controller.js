@@ -1,6 +1,9 @@
 import student from "../models/Student.js";
 import admin from "../models/admin.js";
 import books from "../models/books.js";
+import jwt from'jsonwebtoken'
+const TOKEN = "voihjiogoi";
+
 
 export const signUp = async (req, res, next) => {
   try {
@@ -77,5 +80,39 @@ export const viewIssuedBook = async (req, res, next) => {
   try {
   } catch (error) {
     res.status(200).json("Oops! Something went wrong");
+  }
+};
+
+export const loginAdmin = async (req, res, next) => {
+  const { username, password } = req.body;
+
+  try {
+    const newAdmin = await admin.findOne({ username }).exec();
+
+    if (!newAdmin || newAdmin.password !== password) {
+      return res.status(401).json({ error: "Wrong username/password" });
+    }
+
+    const token = jwt.sign(
+      {
+        username: newAdmin.username,
+        id: newAdmin.id,
+      },
+      TOKEN,
+      {
+        expiresIn: "2h",
+      },
+    );
+
+    return res.status(200).json({
+      message: "Login successfully",
+      token: token,
+      username,
+      id: newAdmin.id,
+    });
+  } catch (e) {
+    console.log(e);
+
+    res.status(500).send("Internal Server Error");
   }
 };

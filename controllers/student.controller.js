@@ -53,7 +53,7 @@ export const login = async (req, res, next) => {
         expiresIn: "2h",
       },
     );
-
+console.log('login')
     return res.status(200).json({
       message: "Login successfully",
       token: token,
@@ -68,13 +68,19 @@ export const login = async (req, res, next) => {
 };
 
 export const getOneStudent = async (req, res, next) => {
-  console.log("the student id is ", req.body.id);
+  console.log("the student id is ", req.params.id);
+
 
   try {
-    const studentToFind = await Student.findOne({
-      username: req.body.username,
+    const studentToFind = await Student.findOne
+    ({
+      id: req.params.id,
+     
     });
-    res.status(200).json(studentToFind);
+    if(studentToFind){
+      console.log("there is a dtudent ")
+      return  res.status(200).json(studentToFind);
+    }
   } catch (error) {
     console.log("the error is ", error);
     restart.status(500).send("Student not found");
@@ -84,7 +90,7 @@ export const getAllStudent = async (req, res, next) => {
   try {
     const allStudent = await Student.find();
 
-    res.status(200).json(allStudent);
+    return res.status(200).json(allStudent);
   } catch (error) {
     res.status(500).send("Error!");
   }
