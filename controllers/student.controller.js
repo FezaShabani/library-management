@@ -78,7 +78,7 @@ export const getOneStudent = async (req, res, next) => {
      
     });
     if(studentToFind){
-      console.log("there is a dtudent ")
+      console.log("there is a student ")
       return  res.status(200).json(studentToFind);
     }
   } catch (error) {
@@ -93,5 +93,21 @@ export const getAllStudent = async (req, res, next) => {
     return res.status(200).json(allStudent);
   } catch (error) {
     res.status(500).send("Error!");
+  }
+};
+
+export const searchStudents = async (req,res,next) => {
+  const { name } = req.body;
+  try{
+    const students = await Student.find({
+      $or: [
+        {firstname: { $regex: name, $options: 'i'} },
+        { lastname: { $regex: name, $options: 'i'}}
+      ]
+    });
+    res.status(200).json(students);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error fetrching students" });
   }
 };

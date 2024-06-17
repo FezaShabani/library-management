@@ -1,7 +1,7 @@
 import student from "../models/Student.js";
 import admin from "../models/admin.js";
 import books from "../models/books.js";
-import jwt from'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 const TOKEN = "voihjiogoi";
 
 
@@ -24,9 +24,9 @@ export const signUp = async (req, res, next) => {
 
 export const issueBookToStudent = async (req, res, next) => {
   try {
-    const { studentId, isbn } = req.body;
-    // Find the student by username
-
+    const { studentId, title } = req.body;
+    
+    // Find the student by id
     const studentToGetBook = await student.findOne({
       id: studentId,
     });
@@ -39,7 +39,10 @@ export const issueBookToStudent = async (req, res, next) => {
     console.log("the student is ", studentToGetBook);
 
     // Find the book by title
-    const bookToGive = await books.findOne({ isbn });
+    const bookToGive = await books.findOne({ title });
+   const bookTitle=bookToGive.title
+   const isbn=bookToGive.isbn
+
     console.log("the book to give  is ", bookToGive);
 
     if (!bookToGive) {
@@ -61,6 +64,7 @@ export const issueBookToStudent = async (req, res, next) => {
     studentToGetBook.books.push({
       isbn,
       takenAt: new Date(),
+      title:bookTitle
     });
 
     // Update the number of copies for the book by decrementing by 1

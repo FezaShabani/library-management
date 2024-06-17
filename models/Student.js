@@ -8,7 +8,7 @@ const StudentSchema = new mongoose.Schema(
     username: { type: String, required: true },
     id: { type: String, required: true },
     password: { type: String, required: true },
-    books: { type: [{ takenAt: Date, isbn: String }], required: true },
+    books: { type: [{ takenAt: Date, isbn: String,title:String }], required: true },
 
     isAdmin: { type: Boolean, default: false },
   },

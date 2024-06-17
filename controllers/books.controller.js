@@ -20,6 +20,7 @@ export const addBook = async (req, res, next) => {
 export const getOneBook = async (req, res, next) => {
   try {
     console.log("the book is ", req.body.title);
+    
     const bookToFind = await books.findOne({ title: req.body.title });
     res.status(200).json(bookToFind);
   } catch (error) {
@@ -35,11 +36,27 @@ export const getAllBook = async (req, res, next) => {
     res.status(500).send("Error");
   }
 };
+export const searchBooks = async (req,res,next) => {
+  const { title } = req.body;
+  try{
+    const booksToFind = await books.find({ title: { $regex: title, $options: 'i'} }); //'i' for case insensitive
+    res.status(200).json(booksToFind);
+  } catch (error){
+    console.log(error);
+    res.status(500).json({ message: "Error fetching books"});
+  }
+};
 export const deleteBook = async (req, res, next) => {
   try {
-    const bookToDelete = await books.findByIdAndDelete(req.body.title);
-    res.status(200).json("Book deleted");
+    console.log('backend',req.params)
+
+    const bookToDelete = await books.deleteOne({isbn:req.params.id});
+    console.log('zeu book',bookToDelete)
+    if (!bookToDelete){
+      return res.status(404).json({ message: "Book not found"});
+    }
+    res.status(200).json({ message:"Book deleted successfully"});
   } catch (error) {
-    res.status(200).json("Error");
+    res.status(200).json({ message:error });
   }
 };
